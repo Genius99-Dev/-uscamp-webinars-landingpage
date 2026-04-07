@@ -44,7 +44,7 @@ export default function Hero() {
     <section className="relative overflow-hidden min-h-screen">
       {/* Video arka plan */}
       <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-60">
-        <source src="/hero-bg.mp4" type="video/mp4" />
+        <source src="/hero-bg-small.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0" style={{ background: "linear-gradient(120deg, rgba(6,83,159,0.6) 0%, rgba(0,0,0,0.45) 30%, rgba(0,0,0,0.45) 70%, rgba(227,30,38,0.6) 100%)" }} />
 
