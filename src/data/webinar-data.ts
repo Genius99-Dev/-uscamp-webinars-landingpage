@@ -1,8 +1,8 @@
 export const webinarData = {
-  title: "Amerika'da Doktor Olmak",
-  titleHighlight: "MATCH 2026 Başarı Stratejileri",
+  title: "6 Haftalık Ücretsiz Webinar Serimizde Amerika'da Doktorluk Yolculuğunu Öğren",
+  titleHighlight: "",
   subtitle:
-    "USMLE sürecinden MATCH başvurusuna, ABD'de doktor olma yolculuğunuzun her adımını uzmanlarından öğrenin.",
+    "Bu yolculuğu tamamlamış uzman mentörler anlatacak, aynı hayali paylaşan yüzlerce doktorla birlikte keşfedeceksin!",
   date: "15 Mayıs 2026",
   time: "21:00 (Türkiye Saati)",
   targetDate: "2026-05-15T18:00:00Z",
