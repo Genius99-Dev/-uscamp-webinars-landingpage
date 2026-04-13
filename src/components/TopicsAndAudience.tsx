@@ -215,7 +215,7 @@ export default function TopicsAndAudience() {
             <span className="text-gray-900">Süreci Baştan Sona Uzman Mentörlerden Öğren</span>
           </h2>
           <div className="w-16 h-1 bg-[#e31e26] mb-4" />
-          <p className="text-gray-600">Süreç hakkında bilgin olmasa da, nereden başlayacağını bilmesen de — bu ücretsiz 6 webinarlık serimizde tüm süreci uzmanlardan öğreneceksin.</p>
+          <p className="text-gray-600">Süreç hakkında bilgin olmasa da, nereden başlayacağını bilmesen de — bu ücretsiz 4 webinarlık serimizde tüm süreci uzmanlardan öğreneceksin.</p>
         </motion.div>
 
         <div className="flex flex-col lg:flex-row gap-8">

@@ -1,7 +1,7 @@
 import { speakers } from "./speakers";
 
 export const webinarData = {
-  title: "6 Haftalık Ücretsiz Webinar Serimizde Amerika'da Doktorluk Yolculuğunu Öğren",
+  title: "4 Haftalık Ücretsiz Webinar Serimizde Amerika'da Doktorluk Yolculuğunu Öğren",
   titleHighlight: "",
   subtitle:
     "Bu yolculuğu tamamlamış uzman mentörler anlatacak, aynı hayali paylaşan yüzlerce doktorla birlikte keşfedeceksin!",

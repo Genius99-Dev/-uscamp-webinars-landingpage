@@ -16,7 +16,7 @@ const benefits = [
   {
     number: "03",
     title: "Tamamen Ücretsiz",
-    desc: "6 webinar, 6 uzman, sıfır ücret. Kayıt olman yeterli.",
+    desc: "4 webinar, 4 uzman, sıfır ücret. Kayıt olman yeterli.",
   },
 ];
 

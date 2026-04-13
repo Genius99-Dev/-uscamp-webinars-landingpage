@@ -9,7 +9,7 @@ export default function Speakers() {
           <h2 className="text-3xl font-bold text-white mb-3">Konuşmacılar</h2>
           <div className="w-16 h-1 bg-[#e31e26] mx-auto" />
           <p className="text-gray-400 text-sm mt-4 max-w-xl mx-auto">
-            6 haftalık webinar serimizde ABD&apos;de doktorluk yolculuğunu
+            4 haftalık webinar serimizde ABD&apos;de doktorluk yolculuğunu
             bizzat yaşamış uzman mentörler eşlik edecek.
           </p>
         </div>

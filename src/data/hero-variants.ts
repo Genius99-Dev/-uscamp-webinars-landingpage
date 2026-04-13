@@ -17,24 +17,24 @@ export const heroVariants: Record<string, HeroVariant> = {
     headline:
       "Amerika'da Doktorluk Kariyerine Adım Atan Her İki Doktordan Biri Başarıyor — Sen de O %56'nın İçinde Olabilirsin",
     highlight: "Her İki Doktordan Biri Başarıyor",
-    sub: "6 haftalık ücretsiz webinar serimizde o başarılı doktorların neyi farklı yaptığını baştan sona anlatıyoruz.",
+    sub: "4 haftalık ücretsiz webinar serimizde o başarılı doktorların neyi farklı yaptığını baştan sona anlatıyoruz.",
   },
   angle1_hook2: {
     headline:
       "Binlerce Türk Doktor Amerika'da Doktorluk Hayalini Gerçeğe Dönüştürdü — Sıra Sende",
     highlight: "Sıra Sende",
-    sub: "Bu yolculuğu bizzat yaşamış uzmanlar ve aynı hayali paylaşan yüzlerce doktorla birlikte 6 haftada tüm süreci öğren.",
+    sub: "Bu yolculuğu bizzat yaşamış uzmanlar ve aynı hayali paylaşan yüzlerce doktorla birlikte 4 haftada tüm süreci öğren.",
   },
   angle2_hook1: {
     headline:
       "ABD'de Doktorluk Süreci Karmaşık Değil — Sadece Henüz Doğru Yol Haritasını Bilmiyorsun",
     highlight: "Karmaşık Değil",
-    sub: "6 haftalık ücretsiz webinar serimizde nereden başlayacağından match'e kadar her adımı adım adım anlatıyoruz.",
+    sub: "4 haftalık ücretsiz webinar serimizde nereden başlayacağından match'e kadar her adımı adım adım anlatıyoruz.",
   },
   angle2_hook2: {
     headline: "Bu Yolculukta Zor Olan Sürecin Kendisi Değil — Yalnız Yürütmek",
     highlight: "Yalnız Yürütmek",
-    sub: "Süreci yaşamış uzmanlar ve aynı hayali paylaşan yüzlerce doktorla birlikte 6 haftada tüm süreci öğren. Artık yalnız değilsin.",
+    sub: "Süreci yaşamış uzmanlar ve aynı hayali paylaşan yüzlerce doktorla birlikte 4 haftada tüm süreci öğren. Artık yalnız değilsin.",
   },
   angle3_hook1: {
     headline:
@@ -46,13 +46,13 @@ export const heroVariants: Record<string, HeroVariant> = {
     headline:
       "ABD'de Doktorluk Yolculuğunda En Büyük Risk Para Değil — Yanlış Sırayla İlerleyerek Yıl Kaybetmek",
     highlight: "Yıl Kaybetmek",
-    sub: "6 haftalık ücretsiz webinar serimizde doğru yol haritasını öğren, gereksiz zaman kaybını önle.",
+    sub: "4 haftalık ücretsiz webinar serimizde doğru yol haritasını öğren, gereksiz zaman kaybını önle.",
   },
 };
 
 /** URL parametresi yoksa veya geçersizse kullanılacak orijinal iki-satırlı yapı. */
 export const heroDefault = {
-  lineTop: "6 Haftalık Ücretsiz Webinar Serimizde",
+  lineTop: "4 Haftalık Ücretsiz Webinar Serimizde",
   lineBottom: "Amerika'da Doktorluk Yolculuğunun Her Adımını Öğren",
 };
 
