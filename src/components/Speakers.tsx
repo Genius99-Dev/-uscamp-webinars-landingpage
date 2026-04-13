@@ -1,5 +1,5 @@
 import { webinarData } from "@/data/webinar-data";
-import { User } from "lucide-react";
+import SpeakerAvatar from "@/components/ui/SpeakerAvatar";
 
 export default function Speakers() {
   return (
@@ -15,8 +15,8 @@ export default function Speakers() {
               key={i}
               className="bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col items-center flex-1"
             >
-              <div className="w-28 h-28 rounded-full bg-gradient-to-br from-[#06539f] to-[#e31e26] flex items-center justify-center mb-6">
-                <User size={40} className="text-white" />
+              <div className="mb-6">
+                <SpeakerAvatar speaker={s} size="lg" />
               </div>
               <h3 className="text-white text-xl font-bold">{s.name}</h3>
               <p className="text-[#e31e26] font-medium mb-3">{s.title}</p>

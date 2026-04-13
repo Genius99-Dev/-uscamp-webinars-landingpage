@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { webinarData } from "@/data/webinar-data";
 import { heroDefault, type HeroVariant } from "@/data/hero-variants";
 import dynamic from "next/dynamic";
@@ -156,11 +157,22 @@ export default function Hero({ variant }: { variant: HeroVariant | null }) {
                 <p className="text-[#e31e26] text-sm font-medium mt-1">{speaker.title}</p>
               </div>
               <div className="relative overflow-hidden rounded-2xl border-2 border-white/10 group-hover:border-[#e31e26]/40 transition-all duration-500 aspect-[3/4] bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm">
-                <div className="absolute inset-0 flex items-end justify-center">
-                  <div className="w-full h-[85%] bg-gradient-to-t from-[#06539f]/40 via-transparent to-transparent flex items-end justify-center pb-0">
-                    <User className="w-32 h-32 sm:w-40 sm:h-40 text-white/20" strokeWidth={0.8} />
+                {speaker.image ? (
+                  <Image
+                    src={speaker.image}
+                    alt={speaker.name}
+                    fill
+                    sizes="(max-width: 640px) 200px, 220px"
+                    className="object-cover"
+                    priority={index === 0}
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-end justify-center">
+                    <div className="w-full h-[85%] bg-gradient-to-t from-[#06539f]/40 via-transparent to-transparent flex items-end justify-center pb-0">
+                      <User className="w-32 h-32 sm:w-40 sm:h-40 text-white/20" strokeWidth={0.8} />
+                    </div>
                   </div>
-                </div>
+                )}
                 <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute inset-0 bg-[#e31e26]/0 group-hover:bg-[#e31e26]/5 transition-all duration-500" />
               </div>

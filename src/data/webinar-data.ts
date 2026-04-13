@@ -1,3 +1,5 @@
+import { speakers } from "./speakers";
+
 export const webinarData = {
   title: "6 Haftalık Ücretsiz Webinar Serimizde Amerika'da Doktorluk Yolculuğunu Öğren",
   titleHighlight: "",
@@ -19,10 +21,7 @@ export const webinarData = {
     { title: "Pratisyen Hekimler", desc: "USMLE sürecine başlamayı düşünen veya hazırlık aşamasındaki hekimler", icon: "🩺" },
     { title: "Uzman Doktorlar", desc: "Uzmanlıklarını ABD'ye taşımak isteyen deneyimli hekimler", icon: "🌍" },
   ],
-  speakers: [
-    { name: "Dr. Furkan Hamamcı", title: "USCAMP Kurucu", bio: "ABD'de doktorluk sürecini bizzat yaşamış, yüzlerce Türk hekime mentorluk yapmış deneyimli bir rehber." },
-    { name: "Seher Sena Elağöz, MD", title: "USCAMP Eğitmen & Mentor", bio: "USMLE ve MATCH süreçlerini başarıyla tamamlamış, öğrencilere birebir koçluk sağlayan deneyimli bir eğitmen." },
-  ],
+  speakers: [speakers.furkan, speakers.sena],
   socialProof: {
     attendeeCount: "2,500+",
     attendeeLabel: "doktor ve doktor adayı USCAMP ailesinde",

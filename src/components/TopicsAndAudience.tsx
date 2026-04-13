@@ -2,15 +2,26 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, ChevronRight, User } from "lucide-react";
+import { Calendar, ChevronRight } from "lucide-react";
+import { speakers, type SpeakerId } from "@/data/speakers";
+import SpeakerAvatar from "@/components/ui/SpeakerAvatar";
 
-const webinarSeries = [
+type WebinarEntry = {
+  number: string;
+  title: string;
+  date: string;
+  speakerIds: SpeakerId[];
+  /** Çok kişili (>2) webinarlarda kart üstünde tek satırlık özet başlık. */
+  groupLabel?: string;
+  topics: string[];
+};
+
+const webinarSeries: WebinarEntry[] = [
   {
     number: "01",
     title: "ABD'de Doktorluk: Gerçekler, Mitler ve Yol Haritası",
     date: "9 Mayıs 2026",
-    speaker: "Dr. Furkan Hamamcı",
-    speakerTitle: "USCAMP Kurucu",
+    speakerIds: ["furkan"],
     topics: [
       "ABD'de doktorluk süreci hakkında yaygın mitler ve gerçekler",
       "USMLE, ECFMG ve MATCH sürecinin genel yol haritası",
@@ -21,8 +32,7 @@ const webinarSeries = [
     number: "02",
     title: "Klinik Deneyim (USCE) ve Güçlü CV Oluşturma",
     date: "16 Mayıs 2026",
-    speaker: "Dr. Furkan Hamamcı & Seher Sena Elağöz, MD",
-    speakerTitle: "USCAMP Eğitmen & Mentor",
+    speakerIds: ["furkan", "sena"],
     topics: [
       "Observership ve hands-on staj farkları",
       "ABD'de staj başvuru süreci ve zamanlama",
@@ -33,8 +43,7 @@ const webinarSeries = [
     number: "03",
     title: "USMLE Çalışma Stratejileri",
     date: "23 Mayıs 2026",
-    speaker: "Melih Tarık Özdemir",
-    speakerTitle: "USCAMP Eğitmen",
+    speakerIds: ["melih"],
     topics: [
       "Step 1 ve Step 2 CK için verimli çalışma planı",
       "Kaynak seçimi ve soru bankası stratejileri",
@@ -45,8 +54,7 @@ const webinarSeries = [
     number: "04",
     title: "ERAS Başvurusu & Vize Süreci",
     date: "30 Mayıs 2026",
-    speaker: "Berk Kaan Aktaş, MD & Alperen Öztürk, MD",
-    speakerTitle: "USCAMP Mentor",
+    speakerIds: ["berk", "alperen"],
     topics: [
       "ERAS başvuru dosyası nasıl hazırlanır",
       "Personal Statement yazım teknikleri",
@@ -57,8 +65,7 @@ const webinarSeries = [
     number: "05",
     title: "Match Şansını Artırma, Branş Seçimi ve ABD'de Asistanlık Hayatı",
     date: "6 Haziran 2026",
-    speaker: "Berk Kaan Aktaş, MD & Alperen Öztürk, MD",
-    speakerTitle: "USCAMP Mentor",
+    speakerIds: ["berk", "alperen"],
     topics: [
       "MATCH şansını artıran stratejiler",
       "Branş seçiminde dikkat edilmesi gerekenler",
@@ -69,8 +76,8 @@ const webinarSeries = [
     number: "06",
     title: "Başarı Hikayeleri & Soru-Cevap",
     date: "13 Haziran 2026",
-    speaker: "USCAMP Mentorları",
-    speakerTitle: "Berk Kaan, Alperen Öztürk, Büşra Cangüt, Ebubekir Uçar, Miray Kurtça",
+    speakerIds: ["berk", "alperen", "busra", "ebubekir", "miray"],
+    groupLabel: "USCAMP Mentorları",
     topics: [
       "ABD'de MATCH'e kabul olan doktorların hikayeleri",
       "Süreçte karşılaşılan zorluklar ve çözümleri",
@@ -78,6 +85,68 @@ const webinarSeries = [
     ],
   },
 ];
+
+/**
+ * Seçili webinarın konuşmacı bloğu: 1 kişi tek avatar, 2 kişi yan yana,
+ * 3+ kişi (webinar 06) stacked overlapping avatar grubu + grup başlığı.
+ */
+function SpeakerBlock({ entry }: { entry: WebinarEntry }) {
+  const people = entry.speakerIds.map((id) => speakers[id]);
+
+  if (people.length === 1) {
+    const p = people[0];
+    return (
+      <div className="flex items-center gap-4 mb-6">
+        <SpeakerAvatar speaker={p} size="md" />
+        <div>
+          <h4 className="text-lg font-bold text-gray-900">{p.name}</h4>
+          <p className="text-sm text-[#e31e26]">{p.title}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (people.length === 2) {
+    return (
+      <div className="flex items-center gap-4 mb-6">
+        <div className="flex -space-x-3">
+          {people.map((p) => (
+            <div key={p.name} className="ring-2 ring-white rounded-full">
+              <SpeakerAvatar speaker={p} size="md" />
+            </div>
+          ))}
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-gray-900 leading-tight">
+            {people.map((p) => p.name).join(" & ")}
+          </h4>
+          <p className="text-sm text-[#e31e26]">{people[0].title}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // 3+ kişi — stacked avatar grubu
+  return (
+    <div className="flex items-center gap-4 mb-6">
+      <div className="flex -space-x-3">
+        {people.map((p) => (
+          <div key={p.name} className="ring-2 ring-white rounded-full">
+            <SpeakerAvatar speaker={p} size="sm" />
+          </div>
+        ))}
+      </div>
+      <div>
+        <h4 className="text-lg font-bold text-gray-900 leading-tight">
+          {entry.groupLabel ?? "USCAMP Mentorları"}
+        </h4>
+        <p className="text-xs text-gray-500 mt-0.5 leading-snug">
+          {people.map((p) => p.name.split(",")[0]).join(", ")}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function TopicsAndAudience() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -149,16 +218,9 @@ export default function TopicsAndAudience() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="bg-white rounded-2xl shadow-lg p-8 h-full">
-              {/* Konuşmacı */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#06539f] to-[#e31e26] flex items-center justify-center shrink-0">
-                  <User className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900">{active.speaker}</h4>
-                  <p className="text-sm text-[#e31e26]">{active.speakerTitle}</p>
-                </div>
-              </div>
+              {/* Konuşmacı(lar) */}
+              <SpeakerBlock entry={active} />
+
 
               {/* Webinar Başlığı */}
               <h3 className="text-xl font-bold text-gray-900 mb-2">{active.title}</h3>
