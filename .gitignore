@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 public/hero-bg.mp4
+
+# planning notes
+PLAN_*.md
