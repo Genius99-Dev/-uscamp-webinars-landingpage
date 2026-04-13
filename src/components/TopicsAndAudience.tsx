@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, ChevronRight } from "lucide-react";
+import { Calendar, ChevronDown, ChevronRight } from "lucide-react";
 import { speakers, type SpeakerId } from "@/data/speakers";
 import SpeakerAvatar from "@/components/ui/SpeakerAvatar";
 
@@ -231,16 +231,32 @@ export default function TopicsAndAudience() {
               {webinarSeries.map((webinar, index) => {
                 const isActive = activeIndex === index;
                 return (
-                  <div key={index}>
+                  <div key={index} className="mb-2 lg:mb-0">
                     <div
                       onClick={() => setActiveIndex(index)}
-                      className={`flex gap-4 py-4 px-4 rounded-xl cursor-pointer transition-all duration-300 border-l-4 ${
-                        isActive
-                          ? "bg-white shadow-md border-l-[#e31e26]"
-                          : "border-l-transparent hover:bg-white/60 hover:border-l-gray-300"
-                      }`}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setActiveIndex(index);
+                        }
+                      }}
+                      className={
+                        // Ortak temel — mobil affordance: her item kart gibi (border + bg)
+                        "flex gap-4 py-4 px-4 rounded-xl cursor-pointer transition-all duration-300 border border-l-4 " +
+                        (isActive
+                          ? // MOBİL aktif: belirgin beyaz kart + kırmızı sol çubuk
+                            // DESKTOP aktif: shadow + sol kırmızı çubuk (border-y/r görünmez)
+                            "bg-white shadow-md border-[#e31e26]/30 border-l-[#e31e26] " +
+                            "lg:border-y-transparent lg:border-r-transparent"
+                          : // MOBİL inactive: yarı saydam beyaz + gri kenarlık → "tıklanabilir kart" hissi
+                            // DESKTOP inactive: tam transparan, hover ile sol gri çubuk
+                            "bg-white/60 border-gray-200 border-l-transparent hover:bg-white/80 " +
+                            "lg:bg-transparent lg:border-transparent lg:hover:bg-white/60 lg:hover:border-l-gray-300")
+                      }
                     >
-                      <span className={`text-2xl font-bold min-w-[40px] ${isActive ? "text-[#e31e26]" : "text-gray-300"}`}>
+                      <span className={`text-2xl font-bold min-w-[40px] ${isActive ? "text-[#e31e26]" : "text-gray-400 lg:text-gray-300"}`}>
                         {webinar.number}
                       </span>
                       <div className="flex-1">
@@ -252,10 +268,16 @@ export default function TopicsAndAudience() {
                           <span className="text-xs text-gray-500">{webinar.date}</span>
                         </div>
                       </div>
+                      {/* Mobil: ChevronDown (aktifken yukarı bakar). Desktop: ChevronRight (split layout). */}
+                      <ChevronDown
+                        className={`w-5 h-5 mt-1 shrink-0 transition-all duration-300 lg:hidden ${
+                          isActive ? "text-[#e31e26] rotate-180" : "text-gray-500"
+                        }`}
+                      />
                       <ChevronRight
-                        className={`w-5 h-5 mt-1 shrink-0 transition-all duration-300 ${
+                        className={`w-5 h-5 mt-1 shrink-0 transition-colors hidden lg:block ${
                           isActive ? "text-[#e31e26]" : "text-gray-300"
-                        } ${isActive ? "rotate-90 lg:rotate-0" : ""}`}
+                        }`}
                       />
                     </div>
 
