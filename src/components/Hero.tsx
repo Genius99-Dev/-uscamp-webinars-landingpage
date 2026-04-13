@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { webinarData } from "@/data/webinar-data";
 import { heroDefault, type HeroVariant } from "@/data/hero-variants";
+import type { Speaker } from "@/data/speakers";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { User, ChevronRight } from "lucide-react";
@@ -36,6 +37,52 @@ function CountdownRenderer({ days, hours, minutes, seconds, completed }: Countdo
           <span className="block text-[10px] text-white/70 mt-0.5">{box.label}</span>
         </div>
       ))}
+    </div>
+  );
+}
+
+/**
+ * Hero'daki konuşmacı kartı — portreyi gösterir veya görsel yoksa jenerik
+ * User ikonu fallback'i. Mobilde slider içinde, desktop'ta sabit grid'de.
+ */
+function HeroSpeakerCard({
+  speaker,
+  priority,
+  className = "",
+}: {
+  speaker: Speaker;
+  priority?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={`relative group flex flex-col ${className}`}>
+      <div className="text-center mb-4 z-10">
+        <h3 className="text-white font-bold text-base sm:text-lg leading-tight">
+          {speaker.name}
+        </h3>
+        <p className="text-[#e31e26] text-sm font-medium mt-1">{speaker.title}</p>
+      </div>
+      <div className="relative overflow-hidden rounded-2xl border-2 border-white/10 group-hover:border-[#e31e26]/40 transition-all duration-500 aspect-[3/4] bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm">
+        {speaker.image ? (
+          <Image
+            src={speaker.image}
+            alt={speaker.name}
+            fill
+            sizes="(max-width: 1024px) 60vw, 220px"
+            className="object-cover"
+            priority={priority}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-end justify-center">
+            <div className="w-full h-[85%] bg-gradient-to-t from-[#06539f]/40 via-transparent to-transparent flex items-end justify-center pb-0">
+              <User className="w-32 h-32 sm:w-40 sm:h-40 text-white/20" strokeWidth={0.8} />
+            </div>
+          </div>
+        )}
+        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute inset-0 bg-[#e31e26]/0 group-hover:bg-[#e31e26]/5 transition-all duration-500" />
+      </div>
+      <div className="h-1 bg-gradient-to-r from-[#e31e26] to-[#06539f] rounded-full mt-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
     </div>
   );
 }
@@ -145,40 +192,34 @@ export default function Hero({ variant }: { variant: HeroVariant | null }) {
         </motion.div>
 
         <motion.div
-          className="lg:w-[45%] flex gap-4 justify-center lg:justify-end lg:pt-16"
+          className="w-full lg:w-[45%] lg:pt-16"
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          {webinarData.speakers.map((speaker, index) => (
-            <div key={index} className="relative group flex flex-col w-[200px] sm:w-[220px]">
-              <div className="text-center mb-4 z-10">
-                <h3 className="text-white font-bold text-base sm:text-lg leading-tight">{speaker.name}</h3>
-                <p className="text-[#e31e26] text-sm font-medium mt-1">{speaker.title}</p>
-              </div>
-              <div className="relative overflow-hidden rounded-2xl border-2 border-white/10 group-hover:border-[#e31e26]/40 transition-all duration-500 aspect-[3/4] bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm">
-                {speaker.image ? (
-                  <Image
-                    src={speaker.image}
-                    alt={speaker.name}
-                    fill
-                    sizes="(max-width: 640px) 200px, 220px"
-                    className="object-cover"
-                    priority={index === 0}
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-end justify-center">
-                    <div className="w-full h-[85%] bg-gradient-to-t from-[#06539f]/40 via-transparent to-transparent flex items-end justify-center pb-0">
-                      <User className="w-32 h-32 sm:w-40 sm:h-40 text-white/20" strokeWidth={0.8} />
-                    </div>
-                  </div>
-                )}
-                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute inset-0 bg-[#e31e26]/0 group-hover:bg-[#e31e26]/5 transition-all duration-500" />
-              </div>
-              <div className="h-1 bg-gradient-to-r from-[#e31e26] to-[#06539f] rounded-full mt-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-            </div>
-          ))}
+          {/* Mobil: tüm konuşmacılar yatay snap-scroll slider — 1 kart + sonraki %80 peek */}
+          <div className="lg:hidden -mx-6 px-6 overflow-x-auto snap-x snap-mandatory flex gap-4 pb-4 scrollbar-hide">
+            {webinarData.speakers.map((speaker, index) => (
+              <HeroSpeakerCard
+                key={speaker.name}
+                speaker={speaker}
+                priority={index < 2}
+                className="snap-start shrink-0 w-[62%]"
+              />
+            ))}
+          </div>
+
+          {/* Desktop: yalnızca Furkan + Sena (ilk 2), sabit yan yana */}
+          <div className="hidden lg:flex gap-4 justify-end">
+            {webinarData.speakers.slice(0, 2).map((speaker, index) => (
+              <HeroSpeakerCard
+                key={speaker.name}
+                speaker={speaker}
+                priority={index === 0}
+                className="w-[220px]"
+              />
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
