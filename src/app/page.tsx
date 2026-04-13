@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import TopicsAndAudience from "@/components/TopicsAndAudience";
 import Speakers from "@/components/Speakers";
+import WhyDifferent from "@/components/WhyDifferent";
 import SocialProof from "@/components/SocialProof";
 import RegistrationForm from "@/components/RegistrationForm";
 import FAQ from "@/components/FAQ";
@@ -20,6 +21,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
       <Hero variant={variant} />
       <TopicsAndAudience />
       <Speakers />
+      <WhyDifferent />
       <SocialProof />
       <RegistrationForm />
       <FAQ />
