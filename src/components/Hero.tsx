@@ -1,9 +1,11 @@
 "use client";
 
 import { webinarData } from "@/data/webinar-data";
-import Countdown from "react-countdown";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { User, ChevronRight } from "lucide-react";
+
+const Countdown = dynamic(() => import("react-countdown"), { ssr: false });
 
 interface CountdownRendererProps {
   days: number;
