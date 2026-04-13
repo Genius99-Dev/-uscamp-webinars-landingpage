@@ -1,6 +1,7 @@
 "use client";
 
 import { webinarData } from "@/data/webinar-data";
+import { heroDefault, type HeroVariant } from "@/data/hero-variants";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { User, ChevronRight } from "lucide-react";
@@ -38,7 +39,45 @@ function CountdownRenderer({ days, hours, minutes, seconds, completed }: Countdo
   );
 }
 
-export default function Hero() {
+/**
+ * Başlık içindeki `highlight` öbeğini kırmızıya boyar. Tam eşleşen ilk
+ * oluşumu sarar; eşleşme yoksa düz metin döner. Türkçe "İ/ı" kaynaklı
+ * unicode off-by-one sorunlarını önlemek için case-sensitive arama yapılır —
+ * highlight değeri varyant verisinden birebir geldiği için problem yok.
+ */
+function renderHighlightedHeadline(text: string, highlight: string) {
+  const idx = text.indexOf(highlight);
+  if (idx === -1) return <span className="text-white">{text}</span>;
+  const before = text.slice(0, idx);
+  const after = text.slice(idx + highlight.length);
+  return (
+    <>
+      {before && <span className="text-white">{before}</span>}
+      <span className="text-[#e31e26]">{highlight}</span>
+      {after && <span className="text-white">{after}</span>}
+    </>
+  );
+}
+
+function HeroHeadline({ variant }: { variant: HeroVariant | null }) {
+  if (!variant) {
+    return (
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3">
+        <span className="text-[#e31e26]">{heroDefault.lineTop}</span>
+        <br />
+        <span className="text-white">{heroDefault.lineBottom}</span>
+      </h1>
+    );
+  }
+  return (
+    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3">
+      {renderHighlightedHeadline(variant.headline, variant.highlight)}
+    </h1>
+  );
+}
+
+export default function Hero({ variant }: { variant: HeroVariant | null }) {
+  const subtitle = variant?.sub ?? webinarData.subtitle;
   const scrollToForm = () => {
     document.getElementById("registration-form")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -68,14 +107,10 @@ export default function Hero() {
             {webinarData.badge}
           </span>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3">
-            <span className="text-[#e31e26]">6 Haftalık Ücretsiz Webinar Serimizde</span>
-            <br />
-            <span className="text-white">Amerika&apos;da Doktorluk Yolculuğunun Her Adımını Öğren</span>
-          </h1>
+          <HeroHeadline variant={variant} />
 
           <p className="text-base sm:text-lg text-gray-300 mb-8 max-w-xl">
-            {webinarData.subtitle}
+            {subtitle}
           </p>
 
           <div className="w-16 h-1 bg-[#e31e26] mb-6 lg:mx-0 mx-auto" />
