@@ -4,6 +4,7 @@ import { webinarData } from "@/data/webinar-data";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { User, ChevronRight } from "lucide-react";
+import Logo from "@/components/ui/Logo";
 
 const Countdown = dynamic(() => import("react-countdown"), { ssr: false });
 
@@ -52,7 +53,7 @@ export default function Hero() {
       <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#06539f]/15 rounded-full blur-3xl" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-6 flex items-center justify-between">
-        <span className="text-white font-bold text-xl tracking-widest uppercase">USCAMP</span>
+        <Logo className="h-7 sm:h-9 w-auto [&_path[fill='#06539F']]:fill-white [&_path[fill='#05549E']]:fill-white/70" />
         <span className="text-white/50 text-sm hidden sm:block">Yurt Dışında Doktorluğun Tek Adresi</span>
       </div>
 
