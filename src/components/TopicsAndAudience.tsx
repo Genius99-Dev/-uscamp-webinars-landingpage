@@ -52,30 +52,8 @@ const webinarSeries: WebinarEntry[] = [
   },
   {
     number: "04",
-    title: "ERAS Başvurusu & Vize Süreci",
-    date: "30 Mayıs 2026",
-    speakerIds: ["berk", "alperen"],
-    topics: [
-      "ERAS başvuru dosyası nasıl hazırlanır",
-      "Personal Statement yazım teknikleri",
-      "Vize türleri ve başvuru süreçleri",
-    ],
-  },
-  {
-    number: "05",
-    title: "Match Şansını Artırma, Branş Seçimi ve ABD'de Asistanlık Hayatı",
-    date: "6 Haziran 2026",
-    speakerIds: ["berk", "alperen"],
-    topics: [
-      "MATCH şansını artıran stratejiler",
-      "Branş seçiminde dikkat edilmesi gerekenler",
-      "ABD'de asistanlık hayatı nasıl geçiyor",
-    ],
-  },
-  {
-    number: "06",
     title: "Başarı Hikayeleri & Soru-Cevap",
-    date: "13 Haziran 2026",
+    date: "2 Haziran 2026",
     speakerIds: ["berk", "alperen", "busra", "ebubekir", "miray"],
     groupLabel: "USCAMP Mentorları",
     topics: [

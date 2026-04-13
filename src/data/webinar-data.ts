@@ -13,8 +13,6 @@ export const webinarData = {
     { title: "USMLE Step 1 & Step 2 CK", desc: "Sınavlara nasıl verimli hazırlanılır?", icon: "BookOpen", bullets: ["Kaynak seçimi ve çalışma planı oluşturma", "Sık yapılan hatalar ve çözüm önerileri"] },
     { title: "ABD'de Klinik Staj", desc: "Doğru programı nasıl seçersiniz?", icon: "Building2", bullets: ["Observership vs. hands-on deneyim farkları", "Başvuru süreci ve zamanlama"] },
     { title: "Letter of Recommendation", desc: "Güçlü LOR nasıl alınır?", icon: "FileText", bullets: ["Doğru kişileri seçme stratejileri", "Zamanlama ve takip süreci"] },
-    { title: "ERAS Başvurusu", desc: "CV, Personal Statement ve program seçimi", icon: "ClipboardList", bullets: ["Dikkat çeken CV nasıl hazırlanır", "Personal Statement yazım teknikleri"] },
-    { title: "MATCH Süreci", desc: "Interview hazırlığı ve ranking stratejileri", icon: "Trophy", bullets: ["Mülakat soruları ve hazırlık taktikleri", "Rank listesi oluşturma stratejisi"] },
   ],
   audience: [
     { title: "Tıp Fakültesi Öğrencileri", desc: "ABD'de doktorluk hayalini erken dönemde planlamak isteyen 3-6. sınıf öğrencileri", icon: "🎓" },

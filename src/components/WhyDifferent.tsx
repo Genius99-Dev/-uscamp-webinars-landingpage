@@ -6,7 +6,7 @@ const benefits = [
   {
     number: "01",
     title: "Süreç Sırasıyla Anlatılıyor",
-    desc: "Bir webinar bitince bir sonraki başlıyor. USMLE'den ERAS'a, match stratejisinden vize sürecine — doğru sırayla öğreniyorsun.",
+    desc: "Bir webinar bitince bir sonraki başlıyor. Yol haritasından USMLE'ye, klinik deneyimden başarı hikayelerine — doğru sırayla öğreniyorsun.",
   },
   {
     number: "02",

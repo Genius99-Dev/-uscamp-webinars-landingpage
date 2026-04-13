@@ -29,9 +29,9 @@ const upcomingWebinars = [
     image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop",
   },
   {
-    title: "ERAS Başvurusu & Vize Süreci",
-    speaker: "Berk Kaan Aktaş, MD & Alperen Öztürk, MD",
-    date: new Date("2026-05-17T18:00:00Z"),
+    title: "Başarı Hikayeleri & Soru-Cevap",
+    speaker: "USCAMP Mentorları",
+    date: new Date("2026-06-02T18:00:00Z"),
     time: "21:00",
     location: "Zoom (Online)",
     image: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=400&h=250&fit=crop",
