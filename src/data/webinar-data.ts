@@ -5,9 +5,9 @@ export const webinarData = {
   titleHighlight: "",
   subtitle:
     "Bu yolculuğu tamamlamış uzman mentörler anlatacak, aynı hayali paylaşan yüzlerce doktorla birlikte keşfedeceksin!",
-  date: "15 Mayıs 2026",
-  time: "21:00 (Türkiye Saati)",
-  targetDate: "2026-05-15T18:00:00Z",
+  date: "9 Mayıs 2026",
+  time: "20:00 (Türkiye Saati)",
+  targetDate: "2026-05-09T17:00:00Z",
   badge: "Ücretsiz Webinar • Sınırlı Kontenjan",
   topics: [
     { title: "USMLE Step 1 & Step 2 CK", desc: "Sınavlara nasıl verimli hazırlanılır?", icon: "BookOpen", bullets: ["Kaynak seçimi ve çalışma planı oluşturma", "Sık yapılan hatalar ve çözüm önerileri"] },

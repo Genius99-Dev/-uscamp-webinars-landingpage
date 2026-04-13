@@ -7,32 +7,32 @@ const upcomingWebinars = [
   {
     title: "ABD'de Doktorluk: Gerçekler, Mitler ve Yol Haritası",
     speaker: "Dr. Furkan Hamamcı",
-    date: new Date("2026-04-26T18:00:00Z"),
-    time: "21:00",
+    date: new Date("2026-04-26T17:00:00Z"),
+    time: "20:00",
     location: "Zoom (Online)",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=250&fit=crop",
   },
   {
     title: "Klinik Deneyim (USCE) ve Güçlü CV Oluşturma",
     speaker: "Dr. Furkan Hamamcı & Seher Sena Elağöz, MD",
-    date: new Date("2026-05-03T18:00:00Z"),
-    time: "21:00",
+    date: new Date("2026-05-03T17:00:00Z"),
+    time: "20:00",
     location: "Zoom (Online)",
     image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&h=250&fit=crop",
   },
   {
     title: "USMLE Çalışma Stratejileri",
     speaker: "Melih Tarık Özdemir",
-    date: new Date("2026-05-10T18:00:00Z"),
-    time: "21:00",
+    date: new Date("2026-05-10T17:00:00Z"),
+    time: "20:00",
     location: "Zoom (Online)",
     image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop",
   },
   {
     title: "Başarı Hikayeleri & Soru-Cevap",
     speaker: "USCAMP Mentorları",
-    date: new Date("2026-06-02T18:00:00Z"),
-    time: "21:00",
+    date: new Date("2026-06-02T17:00:00Z"),
+    time: "20:00",
     location: "Zoom (Online)",
     image: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=400&h=250&fit=crop",
   },
@@ -134,7 +134,7 @@ export default function SocialProof() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          Tüm webinarlar ücretsizdir • Her Pazar 21:00 (Türkiye Saati) • Zoom üzerinden
+          Tüm webinarlar ücretsizdir • Her Pazar 20:00 (Türkiye Saati) • Zoom üzerinden
         </motion.p>
       </div>
     </section>

@@ -141,7 +141,7 @@ function WebinarDetail({ entry }: { entry: WebinarEntry }) {
       <div className="flex items-center gap-2 mb-6">
         <Calendar className="w-4 h-4 text-[#e31e26]" />
         <span className="text-sm text-gray-500">
-          {entry.date} • Pazar • 21:00 (Türkiye Saati)
+          {entry.date} • Pazar • 20:00 (Türkiye Saati)
         </span>
       </div>
       <div className="mb-6">

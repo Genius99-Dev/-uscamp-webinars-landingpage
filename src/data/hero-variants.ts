@@ -40,7 +40,7 @@ export const heroVariants: Record<string, HeroVariant> = {
     headline:
       "Şu An Senin Gibi Düşünen Yüzlerce Doktor Var — Fark, Bugün Harekete Geçip Geçmemek",
     highlight: "Bugün Harekete Geçip Geçmemek",
-    sub: "26 Nisan'da başlayan ücretsiz webinar serimizde ABD'de doktorluk sürecinin her adımını uzmanlardan öğren.",
+    sub: "9 Mayıs'ta başlayan ücretsiz webinar serimizde ABD'de doktorluk sürecinin her adımını uzmanlardan öğren.",
   },
   angle3_hook2: {
     headline:
