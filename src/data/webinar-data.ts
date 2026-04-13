@@ -21,7 +21,16 @@ export const webinarData = {
     { title: "Pratisyen Hekimler", desc: "USMLE sürecine başlamayı düşünen veya hazırlık aşamasındaki hekimler", icon: "🩺" },
     { title: "Uzman Doktorlar", desc: "Uzmanlıklarını ABD'ye taşımak isteyen deneyimli hekimler", icon: "🌍" },
   ],
-  speakers: [speakers.furkan, speakers.sena],
+  speakers: [
+    speakers.furkan,
+    speakers.sena,
+    speakers.berk,
+    speakers.alperen,
+    speakers.miray,
+    speakers.busra,
+    speakers.melih,
+    speakers.ebubekir,
+  ],
   socialProof: {
     attendeeCount: "2,500+",
     attendeeLabel: "doktor ve doktor adayı USCAMP ailesinde",

@@ -11,7 +11,7 @@ export type Speaker = {
   image: string | null;
 };
 
-export const speakers = {
+const speakersRaw = {
   furkan: {
     name: "Dr. Furkan Hamamcı",
     title: "USCAMP Kurucu",
@@ -57,7 +57,10 @@ export const speakers = {
   },
 } satisfies Record<string, Speaker>;
 
-export type SpeakerId = keyof typeof speakers;
+export type SpeakerId = keyof typeof speakersRaw;
+
+/** Uygulama genelinde Speaker tipi üzerinden erişim — opsiyonel alanlar (bio) tutarlı kalır. */
+export const speakers: Record<SpeakerId, Speaker> = speakersRaw;
 
 export function getSpeaker(id: SpeakerId): Speaker {
   return speakers[id];
