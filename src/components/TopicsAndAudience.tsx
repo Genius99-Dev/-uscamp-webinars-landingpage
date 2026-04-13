@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, ChevronRight } from "lucide-react";
 import { speakers, type SpeakerId } from "@/data/speakers";
 import SpeakerAvatar from "@/components/ui/SpeakerAvatar";
@@ -148,6 +148,53 @@ function SpeakerBlock({ entry }: { entry: WebinarEntry }) {
   );
 }
 
+/**
+ * Seçili webinarın detay kartı — konuşmacı bloğu, başlık, konu listesi ve
+ * kayıt ol CTA. Mobilde liste içinde inline, desktop'ta sağdaki sabit
+ * kolonda render edilir.
+ */
+function WebinarDetail({ entry }: { entry: WebinarEntry }) {
+  return (
+    <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 h-full">
+      <SpeakerBlock entry={entry} />
+      <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
+        {entry.title}
+      </h3>
+      <div className="flex items-center gap-2 mb-6">
+        <Calendar className="w-4 h-4 text-[#e31e26]" />
+        <span className="text-sm text-gray-500">
+          {entry.date} • Pazar • 21:00 (Türkiye Saati)
+        </span>
+      </div>
+      <div className="mb-6">
+        <p className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">
+          Bu webinarda ele alınacak konular
+        </p>
+        <div className="space-y-3">
+          {entry.topics.map((topic, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <div className="w-6 h-6 rounded-full bg-[#e31e26]/10 flex items-center justify-center shrink-0 mt-0.5">
+                <span className="text-xs font-bold text-[#e31e26]">{i + 1}</span>
+              </div>
+              <p className="text-gray-600 text-sm">{topic}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <button
+        onClick={() =>
+          document
+            .getElementById("registration-form")
+            ?.scrollIntoView({ behavior: "smooth" })
+        }
+        className="w-full bg-[#e31e26] hover:bg-[#c41920] text-white font-bold py-3 rounded-lg transition-colors cursor-pointer text-sm"
+      >
+        Bu Webinara Kayıt Ol
+      </button>
+    </div>
+  );
+}
+
 export default function TopicsAndAudience() {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = webinarSeries[activeIndex];
@@ -181,77 +228,69 @@ export default function TopicsAndAudience() {
             transition={{ duration: 0.5 }}
           >
             <div className="flex flex-col">
-              {webinarSeries.map((webinar, index) => (
-                <div
-                  key={index}
-                  onClick={() => setActiveIndex(index)}
-                  className={`flex gap-4 py-4 px-4 rounded-xl cursor-pointer transition-all duration-300 border-l-4 ${
-                    activeIndex === index
-                      ? "bg-white shadow-md border-l-[#e31e26]"
-                      : "border-l-transparent hover:bg-white/60 hover:border-l-gray-300"
-                  }`}
-                >
-                  <span className={`text-2xl font-bold min-w-[40px] ${activeIndex === index ? "text-[#e31e26]" : "text-gray-300"}`}>
-                    {webinar.number}
-                  </span>
-                  <div className="flex-1">
-                    <h3 className={`font-semibold text-sm leading-tight ${activeIndex === index ? "text-[#06539f]" : "text-gray-900"}`}>
-                      {webinar.title}
-                    </h3>
-                    <div className="flex items-center gap-2 mt-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-[#e31e26]" />
-                      <span className="text-xs text-gray-500">{webinar.date}</span>
+              {webinarSeries.map((webinar, index) => {
+                const isActive = activeIndex === index;
+                return (
+                  <div key={index}>
+                    <div
+                      onClick={() => setActiveIndex(index)}
+                      className={`flex gap-4 py-4 px-4 rounded-xl cursor-pointer transition-all duration-300 border-l-4 ${
+                        isActive
+                          ? "bg-white shadow-md border-l-[#e31e26]"
+                          : "border-l-transparent hover:bg-white/60 hover:border-l-gray-300"
+                      }`}
+                    >
+                      <span className={`text-2xl font-bold min-w-[40px] ${isActive ? "text-[#e31e26]" : "text-gray-300"}`}>
+                        {webinar.number}
+                      </span>
+                      <div className="flex-1">
+                        <h3 className={`font-semibold text-sm leading-tight ${isActive ? "text-[#06539f]" : "text-gray-900"}`}>
+                          {webinar.title}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <Calendar className="w-3.5 h-3.5 text-[#e31e26]" />
+                          <span className="text-xs text-gray-500">{webinar.date}</span>
+                        </div>
+                      </div>
+                      <ChevronRight
+                        className={`w-5 h-5 mt-1 shrink-0 transition-all duration-300 ${
+                          isActive ? "text-[#e31e26]" : "text-gray-300"
+                        } ${isActive ? "rotate-90 lg:rotate-0" : ""}`}
+                      />
                     </div>
+
+                    {/* Mobilde inline accordion detayı — desktop'ta gizli */}
+                    <AnimatePresence initial={false}>
+                      {isActive && (
+                        <motion.div
+                          key="mobile-detail"
+                          className="lg:hidden overflow-hidden"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                          <div className="pt-3 pb-2 px-2">
+                            <WebinarDetail entry={webinar} />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  <ChevronRight className={`w-5 h-5 mt-1 shrink-0 transition-colors ${activeIndex === index ? "text-[#e31e26]" : "text-gray-300"}`} />
-                </div>
-              ))}
+                );
+              })}
             </div>
           </motion.div>
 
-          {/* Sağ: Seçili Webinar Detay */}
+          {/* Sağ: Seçili Webinar Detay — sadece desktop'ta, mobilde inline accordion */}
           <motion.div
-            className="lg:w-[55%]"
+            className="hidden lg:block lg:w-[55%]"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="bg-white rounded-2xl shadow-lg p-8 h-full">
-              {/* Konuşmacı(lar) */}
-              <SpeakerBlock entry={active} />
-
-
-              {/* Webinar Başlığı */}
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{active.title}</h3>
-              <div className="flex items-center gap-2 mb-6">
-                <Calendar className="w-4 h-4 text-[#e31e26]" />
-                <span className="text-sm text-gray-500">{active.date} • Pazar • 21:00 (Türkiye Saati)</span>
-              </div>
-
-              {/* Konu Başlıkları */}
-              <div className="mb-6">
-                <p className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">Bu webinarda ele alınacak konular</p>
-                <div className="space-y-3">
-                  {active.topics.map((topic, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-[#e31e26]/10 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-xs font-bold text-[#e31e26]">{i + 1}</span>
-                      </div>
-                      <p className="text-gray-600 text-sm">{topic}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA */}
-              <button
-                onClick={() => document.getElementById("registration-form")?.scrollIntoView({ behavior: "smooth" })}
-                className="w-full bg-[#e31e26] hover:bg-[#c41920] text-white font-bold py-3 rounded-lg transition-colors cursor-pointer text-sm"
-              >
-                Bu Webinara Kayıt Ol
-              </button>
-            </div>
+            <WebinarDetail entry={active} />
           </motion.div>
         </div>
       </div>
