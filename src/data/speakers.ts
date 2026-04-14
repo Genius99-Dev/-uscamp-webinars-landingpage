@@ -14,7 +14,7 @@ export type Speaker = {
 const speakersRaw = {
   furkan: {
     name: "Dr. Furkan Hamamcı",
-    title: "USCAMP Kurucu",
+    title: "USCAMP Kurucu & USCAMP Mentor",
     bio: "ABD'de doktorluk sürecini bizzat yaşamış, yüzlerce Türk hekime mentorluk yapmış deneyimli bir rehber.",
     image: "https://uscamp.com.tr/wp-content/uploads/2025/08/Furkan-Hamamci-2-scaled.jpg",
   },
