@@ -6,9 +6,21 @@ export default function RegistrationForm() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", specialty: "" });
   const [submitted, setSubmitted] = useState(false);
 
+  const [error, setError] = useState("");
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError("");
+
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
+    })
+      .then(() => setSubmitted(true))
+      .catch(() => setError("Bir hata oluştu. Lütfen tekrar deneyin."));
   };
 
   const inputClass =
@@ -28,11 +40,28 @@ export default function RegistrationForm() {
             <p className="text-gray-400">Detaylar e-posta adresinize gönderilecektir.</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form
+            name="registration"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4"
+          >
+            <input type="hidden" name="form-name" value="registration" />
+            <p hidden>
+              <label>
+                <input name="bot-field" />
+              </label>
+            </p>
+            {error && (
+              <div className="text-red-400 text-sm text-center">{error}</div>
+            )}
             <div>
               <label className="text-gray-300 text-sm mb-1 block">Ad Soyad</label>
               <input
                 type="text"
+                name="name"
                 required
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -44,6 +73,7 @@ export default function RegistrationForm() {
               <label className="text-gray-300 text-sm mb-1 block">E-posta</label>
               <input
                 type="email"
+                name="email"
                 required
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -55,6 +85,7 @@ export default function RegistrationForm() {
               <label className="text-gray-300 text-sm mb-1 block">Telefon</label>
               <input
                 type="tel"
+                name="phone"
                 required
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
@@ -66,6 +97,7 @@ export default function RegistrationForm() {
               <label className="text-gray-300 text-sm mb-1 block">Uzmanlık Alanı</label>
               <input
                 type="text"
+                name="specialty"
                 required
                 value={form.specialty}
                 onChange={(e) => setForm({ ...form, specialty: e.target.value })}
