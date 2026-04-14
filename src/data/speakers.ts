@@ -47,7 +47,7 @@ const speakersRaw = {
   },
   melih: {
     name: "Melih Tarık Özdemir",
-    title: "USCAMP Eğitmen",
+    title: "USCAMP Mentor",
     image: "/melih-tarik-ozdemir.jpg",
   },
   ebubekir: {
