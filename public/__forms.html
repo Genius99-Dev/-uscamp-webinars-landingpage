@@ -1,7 +1,16 @@
-<!-- Netlify Forms build-time detection file — not served to users -->
-<form name="registration" netlify netlify-honeypot="bot-field" hidden>
-  <input name="name" type="text" />
-  <input name="email" type="email" />
-  <input name="phone" type="tel" />
-  <input name="specialty" type="text" />
-</form>
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Form Detection</title>
+  </head>
+  <body>
+    <form name="registration" netlify netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" type="text" />
+      <input name="name" type="text" />
+      <input name="email" type="email" />
+      <input name="phone" type="tel" />
+      <input name="specialty" type="text" />
+    </form>
+  </body>
+</html>
