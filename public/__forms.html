@@ -5,7 +5,8 @@
     <title>Form Detection</title>
   </head>
   <body>
-    <form name="registration" netlify netlify-honeypot="bot-field" hidden>
+    <form name="registration" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="registration" />
       <input name="bot-field" type="text" />
       <input name="name" type="text" />
       <input name="email" type="email" />

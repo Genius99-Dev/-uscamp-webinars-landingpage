@@ -14,7 +14,7 @@ export default function RegistrationForm() {
 
     const formData = new FormData(e.target as HTMLFormElement);
 
-    fetch("/", {
+    fetch("/__forms.html", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
