@@ -36,6 +36,7 @@ const webinarSeries: WebinarEntry[] = [
     title: "Klinik Deneyim (USCE) ve Güçlü CV Oluşturma",
     date: "16 Mayıs 2026",
     speakerIds: ["furkan", "sena"],
+    speakerTitleOverrides: { furkan: "USCAMP Kurucu & USCAMP Mentor" },
     topics: [
       "Observership ve hands-on staj farkları",
       "ABD'de staj başvuru süreci ve zamanlama",
