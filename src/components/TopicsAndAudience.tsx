@@ -11,6 +11,8 @@ type WebinarEntry = {
   title: string;
   date: string;
   speakerIds: SpeakerId[];
+  /** Konuşmacı başına title override — verilmezse speakers.ts'deki varsayılan kullanılır. */
+  speakerTitleOverrides?: Partial<Record<SpeakerId, string>>;
   /** Çok kişili (>2) webinarlarda kart üstünde tek satırlık özet başlık. */
   groupLabel?: string;
   topics: string[];
@@ -22,6 +24,7 @@ const webinarSeries: WebinarEntry[] = [
     title: "ABD'de Doktorluk: Gerçekler, Mitler ve Yol Haritası",
     date: "9 Mayıs 2026",
     speakerIds: ["furkan"],
+    speakerTitleOverrides: { furkan: "USCAMP Kurucu" },
     topics: [
       "ABD'de doktorluk süreci hakkında yaygın mitler ve gerçekler",
       "USMLE, ECFMG ve MATCH sürecinin genel yol haritası",
@@ -69,7 +72,10 @@ const webinarSeries: WebinarEntry[] = [
  * 3+ kişi (webinar 06) stacked overlapping avatar grubu + grup başlığı.
  */
 function SpeakerBlock({ entry }: { entry: WebinarEntry }) {
-  const people = entry.speakerIds.map((id) => speakers[id]);
+  const people = entry.speakerIds.map((id) => ({
+    ...speakers[id],
+    title: entry.speakerTitleOverrides?.[id] ?? speakers[id].title,
+  }));
 
   if (people.length === 1) {
     const p = people[0];
