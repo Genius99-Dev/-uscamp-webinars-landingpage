@@ -1,12 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const REGISTERED_KEY = "uscamp_webinar_registered";
 
 export default function RegistrationForm() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", university: "", status: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    try {
+      // localStorage tarayıcıya özgü; hydration mismatch'i önlemek için mount sonrası okunur
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (localStorage.getItem(REGISTERED_KEY)) setAlreadyRegistered(true);
+    } catch {}
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +40,9 @@ export default function RegistrationForm() {
     })
       .then((res) => {
         if (!res.ok) throw new Error("Form gönderilemedi");
+        try {
+          localStorage.setItem(REGISTERED_KEY, new Date().toISOString());
+        } catch {}
         setSubmitted(true);
         setLoading(false);
         setTimeout(() => {
@@ -39,6 +53,16 @@ export default function RegistrationForm() {
         setError("Bir hata oluştu. Lütfen tekrar deneyin.");
         setLoading(false);
       });
+  };
+
+  const handleReopen = () => {
+    try {
+      localStorage.removeItem(REGISTERED_KEY);
+    } catch {}
+    setAlreadyRegistered(false);
+    setSubmitted(false);
+    setForm({ name: "", email: "", phone: "", university: "", status: "" });
+    setError("");
   };
 
   const inputClass =
@@ -53,7 +77,32 @@ export default function RegistrationForm() {
           <div className="w-16 h-1 bg-[#e31e26] mx-auto mt-3" />
         </div>
 
-        {submitted ? (
+        {alreadyRegistered ? (
+          <div className="text-center py-8" role="status" aria-live="polite">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
+              <svg className="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <div className="text-green-400 text-xl font-semibold mb-2">Bu webinara zaten kayıtlısınız.</div>
+            <p className="text-gray-300 text-sm mb-1">
+              Webinar detayları ve katılım bilgileri e-posta adresinize gönderildi.
+            </p>
+            <p className="text-gray-400 text-xs mb-6">
+              Gelen kutunuzu (ve spam klasörünüzü) kontrol etmeyi unutmayın.
+            </p>
+            <div className="border-t border-white/10 pt-4">
+              <p className="text-gray-400 text-xs mb-2">Farklı biri için kayıt oluşturmak ister misiniz?</p>
+              <button
+                type="button"
+                onClick={handleReopen}
+                className="text-gray-300 hover:text-white text-sm underline underline-offset-4 cursor-pointer"
+              >
+                Formu tekrar aç
+              </button>
+            </div>
+          </div>
+        ) : submitted ? (
           <div className="text-center py-8" role="status" aria-live="polite">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
               <svg className="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
