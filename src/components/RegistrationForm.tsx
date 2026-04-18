@@ -29,7 +29,11 @@ export default function RegistrationForm() {
     })
       .then((res) => {
         if (!res.ok) throw new Error("Form gönderilemedi");
-        window.location.href = "https://uscamp.com.tr/webinar-kaydi-tamamlandi/";
+        setSubmitted(true);
+        setLoading(false);
+        setTimeout(() => {
+          window.location.href = "https://uscamp.com.tr/webinar-kaydi-tamamlandi/";
+        }, 2500);
       })
       .catch(() => {
         setError("Bir hata oluştu. Lütfen tekrar deneyin.");
@@ -50,9 +54,21 @@ export default function RegistrationForm() {
         </div>
 
         {submitted ? (
-          <div className="text-center py-8">
-            <div className="text-green-400 text-xl font-semibold mb-2">Kaydınız alındı!</div>
-            <p className="text-gray-400">Detaylar e-posta adresinize gönderilecektir.</p>
+          <div className="text-center py-8" role="status" aria-live="polite">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
+              <svg className="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <div className="text-green-400 text-xl font-semibold mb-2">Kaydınız başarıyla alındı!</div>
+            <p className="text-gray-300 text-sm mb-4">Detaylar e-posta adresinize gönderilecektir.</p>
+            <div className="flex items-center justify-center gap-2 text-gray-400 text-sm">
+              <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.25" />
+                <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              </svg>
+              <span>Birkaç saniye içinde yönlendiriliyorsunuz…</span>
+            </div>
           </div>
         ) : (
           <form
