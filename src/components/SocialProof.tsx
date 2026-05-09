@@ -3,7 +3,17 @@
 import { motion } from "framer-motion";
 import { MapPin, Clock } from "lucide-react";
 
-const upcomingWebinars = [
+type CalendarWebinar = {
+  title: string;
+  speaker: string;
+  date: Date;
+  time: string;
+  location: string;
+  image: string;
+  status: "completed" | "upcoming";
+};
+
+const upcomingWebinars: CalendarWebinar[] = [
   {
     title: "ABD'de Doktorluk: Gerçekler, Mitler ve Yol Haritası",
     speaker: "Dr. Furkan Hamamcı",
@@ -11,6 +21,7 @@ const upcomingWebinars = [
     time: "20:00",
     location: "Zoom (Online)",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=250&fit=crop",
+    status: "completed",
   },
   {
     title: "Klinik Deneyim (USCE) ve Güçlü CV Oluşturma",
@@ -19,6 +30,7 @@ const upcomingWebinars = [
     time: "20:00",
     location: "Zoom (Online)",
     image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&h=250&fit=crop",
+    status: "upcoming",
   },
   {
     title: "USMLE Çalışma Stratejileri",
@@ -27,6 +39,7 @@ const upcomingWebinars = [
     time: "20:00",
     location: "Zoom (Online)",
     image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop",
+    status: "upcoming",
   },
   {
     title: "Başarı Hikayeleri & Soru-Cevap",
@@ -35,6 +48,7 @@ const upcomingWebinars = [
     time: "20:00",
     location: "Zoom (Online)",
     image: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=400&h=250&fit=crop",
+    status: "upcoming",
   },
 ];
 
@@ -66,15 +80,21 @@ export default function SocialProof() {
             const month = webinar.date.toLocaleDateString("tr-TR", { month: "short" });
             const day = webinar.date.getDate();
 
+            const isCompleted = webinar.status === "completed";
             return (
               <motion.div
                 key={index}
-                className="group bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-[#e31e26]/30 transition-all duration-300 cursor-pointer flex flex-col"
+                className={
+                  "group bg-white border rounded-2xl overflow-hidden shadow-sm transition-all duration-300 flex flex-col " +
+                  (isCompleted
+                    ? "border-gray-200 opacity-75 cursor-default"
+                    : "border-gray-200 hover:shadow-xl hover:border-[#e31e26]/30 cursor-pointer")
+                }
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: isCompleted ? 0.75 : 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                onClick={scrollToForm}
+                onClick={isCompleted ? undefined : scrollToForm}
               >
                 {/* Üst: Başlık + Tarih */}
                 <div className="p-5 pb-3">
@@ -83,7 +103,7 @@ export default function SocialProof() {
                       {webinar.title}
                     </h3>
                     <div className="text-right shrink-0">
-                      <p className="text-[9px] font-semibold tracking-widest text-[#e31e26]">{dayOfWeek}</p>
+                      <p className={`text-[9px] font-semibold tracking-widest ${isCompleted ? "text-gray-400" : "text-[#e31e26]"}`}>{dayOfWeek}</p>
                       <p className="text-2xl font-bold text-gray-900 leading-none">
                         <span className="text-xs mr-0.5">{month}</span>{day}
                       </p>
@@ -94,12 +114,21 @@ export default function SocialProof() {
 
                 {/* Resim */}
                 <div className="px-5">
-                  <div className="aspect-video w-full overflow-hidden rounded-lg">
+                  <div className="relative aspect-video w-full overflow-hidden rounded-lg">
                     <img
                       src={webinar.image}
                       alt={webinar.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className={`w-full h-full object-cover transition-transform duration-500 ${
+                        isCompleted ? "grayscale" : "group-hover:scale-105"
+                      }`}
                     />
+                    {isCompleted && (
+                      <div className="absolute top-2 left-2">
+                        <span className="inline-flex items-center text-[10px] font-semibold uppercase tracking-wider text-white bg-gray-700/90 rounded-full px-2.5 py-1">
+                          Tamamlandı
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -117,8 +146,8 @@ export default function SocialProof() {
                   </div>
 
                   <div className="mt-auto pt-4 border-t border-gray-100 flex justify-center mt-4">
-                    <span className="text-sm font-medium text-[#e31e26]">
-                      Kayıt Ol →
+                    <span className={`text-sm font-medium ${isCompleted ? "text-gray-400" : "text-[#e31e26]"}`}>
+                      {isCompleted ? "Webinar Tamamlandı" : "Kayıt Ol →"}
                     </span>
                   </div>
                 </div>
