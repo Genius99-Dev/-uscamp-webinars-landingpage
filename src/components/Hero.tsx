@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { webinarData } from "@/data/webinar-data";
+import { nextUpcomingWebinar } from "@/data/webinar-series";
 import { heroDefault, type HeroVariant } from "@/data/hero-variants";
-import type { Speaker } from "@/data/speakers";
+import { speakers, type Speaker } from "@/data/speakers";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { User, ChevronRight } from "lucide-react";
@@ -124,8 +125,21 @@ function HeroHeadline({ variant }: { variant: HeroVariant | null }) {
   );
 }
 
+/**
+ * Hero kartının alt satırı: 1 konuşmacı → tam isim, 2 konuşmacı → "A & B",
+ * 3+ konuşmacı → groupLabel (örn. "USCAMP Mentorları").
+ */
+function formatHeroSpeakerLine(entry: typeof nextUpcomingWebinar): string {
+  const ids = entry.speakerIds;
+  if (ids.length >= 3) return entry.groupLabel ?? "USCAMP Mentorları";
+  if (ids.length === 2) return `${speakers[ids[0]].name} & ${speakers[ids[1]].name}`;
+  return speakers[ids[0]].name;
+}
+
 export default function Hero({ variant }: { variant: HeroVariant | null }) {
   const subtitle = variant?.sub ?? webinarData.subtitle;
+  const heroWebinar = nextUpcomingWebinar;
+  const heroSpeakerLine = formatHeroSpeakerLine(heroWebinar);
   const scrollToForm = () => {
     document.getElementById("registration-form")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -167,23 +181,23 @@ export default function Hero({ variant }: { variant: HeroVariant | null }) {
           <div className="w-16 h-1 bg-[#e31e26] mb-6 lg:mx-0 mx-auto" />
           <div className="flex items-center gap-4 mb-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-5 py-4 max-w-xl">
             <div className="w-12 h-12 rounded-lg bg-[#e31e26] flex items-center justify-center shrink-0">
-              <span className="text-white font-bold text-lg">01</span>
+              <span className="text-white font-bold text-lg">{heroWebinar.number}</span>
             </div>
             <div className="flex-1">
-              <p className="text-white font-semibold text-base leading-tight">ABD&apos;de Doktorluk: Gerçekler, Mitler ve Yol Haritası</p>
-              <p className="text-gray-400 text-sm mt-1">Dr. Furkan Hamamcı • 9 Mayıs 2026</p>
+              <p className="text-white font-semibold text-base leading-tight">{heroWebinar.title}</p>
+              <p className="text-gray-400 text-sm mt-1">{heroSpeakerLine} • {heroWebinar.date}</p>
             </div>
             <ChevronRight className="w-5 h-5 text-[#e31e26] shrink-0" />
           </div>
 
           <div className="flex items-center gap-6 text-gray-400 mb-8 text-sm sm:text-base">
-            <span className="flex items-center gap-2">📅 {webinarData.date}</span>
+            <span className="flex items-center gap-2">📅 {heroWebinar.date}</span>
             <span className="w-px h-5 bg-white/20" />
             <span className="flex items-center gap-2">🕘 {webinarData.time}</span>
           </div>
 
           <div className="mb-8">
-            <Countdown date={new Date(webinarData.targetDate)} renderer={CountdownRenderer} />
+            <Countdown date={new Date(heroWebinar.targetDate)} renderer={CountdownRenderer} />
           </div>
 
           <button

@@ -3,75 +3,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, ChevronDown, ChevronRight } from "lucide-react";
-import { speakers, type SpeakerId } from "@/data/speakers";
+import { speakers } from "@/data/speakers";
+import { webinarSeries, nextUpcomingIndex, type WebinarEntry } from "@/data/webinar-series";
 import SpeakerAvatar from "@/components/ui/SpeakerAvatar";
-
-type WebinarEntry = {
-  number: string;
-  title: string;
-  date: string;
-  day: string;
-  speakerIds: SpeakerId[];
-  /** Konuşmacı başına title override — verilmezse speakers.ts'deki varsayılan kullanılır. */
-  speakerTitleOverrides?: Partial<Record<SpeakerId, string>>;
-  /** Çok kişili (>2) webinarlarda kart üstünde tek satırlık özet başlık. */
-  groupLabel?: string;
-  topics: string[];
-};
-
-const webinarSeries: WebinarEntry[] = [
-  {
-    number: "01",
-    title: "ABD'de Doktorluk: Gerçekler, Mitler ve Yol Haritası",
-    date: "9 Mayıs 2026",
-    day: "Cumartesi",
-    speakerIds: ["furkan"],
-    speakerTitleOverrides: { furkan: "USCAMP Kurucu" },
-    topics: [
-      "ABD'de doktorluk süreci hakkında yaygın mitler ve gerçekler",
-      "USMLE, ECFMG ve MATCH sürecinin genel yol haritası",
-      "Türk hekimler için en uygun stratejiler",
-    ],
-  },
-  {
-    number: "02",
-    title: "Klinik Deneyim (USCE) ve Güçlü CV Oluşturma",
-    date: "16 Mayıs 2026",
-    day: "Cumartesi",
-    speakerIds: ["furkan", "sena"],
-    speakerTitleOverrides: { furkan: "USCAMP Kurucu & USCAMP Mentor" },
-    topics: [
-      "Observership ve hands-on staj farkları",
-      "ABD'de staj başvuru süreci ve zamanlama",
-      "MATCH için güçlü bir CV nasıl oluşturulur",
-    ],
-  },
-  {
-    number: "03",
-    title: "USMLE Çalışma Stratejileri",
-    date: "23 Mayıs 2026",
-    day: "Cumartesi",
-    speakerIds: ["melih"],
-    topics: [
-      "Step 1 ve Step 2 CK için verimli çalışma planı",
-      "Kaynak seçimi ve soru bankası stratejileri",
-      "Sık yapılan hatalar ve çözüm önerileri",
-    ],
-  },
-  {
-    number: "04",
-    title: "Başarı Hikayeleri & Soru-Cevap",
-    date: "2 Haziran 2026",
-    day: "Salı",
-    speakerIds: ["alperen", "miray", "kutay", "ebubekir"],
-    groupLabel: "USCAMP Mentorları",
-    topics: [
-      "ABD'de MATCH'e kabul olan doktorların hikayeleri",
-      "Süreçte karşılaşılan zorluklar ve çözümleri",
-      "Katılımcılardan gelen sorulara canlı yanıtlar",
-    ],
-  },
-];
 
 /**
  * Seçili webinarın konuşmacı bloğu: 1 kişi tek avatar, 2 kişi yan yana,
@@ -171,22 +105,33 @@ function WebinarDetail({ entry }: { entry: WebinarEntry }) {
           ))}
         </div>
       </div>
-      <button
-        onClick={() =>
-          document
-            .getElementById("registration-form")
-            ?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="w-full bg-[#e31e26] hover:bg-[#c41920] text-white font-bold py-3 rounded-lg transition-colors cursor-pointer text-sm"
-      >
-        Bu Webinara Kayıt Ol
-      </button>
+      {entry.status === "completed" ? (
+        <button
+          type="button"
+          disabled
+          aria-disabled="true"
+          className="w-full bg-gray-200 text-gray-500 font-bold py-3 rounded-lg cursor-not-allowed text-sm"
+        >
+          Bu webinar tamamlandı
+        </button>
+      ) : (
+        <button
+          onClick={() =>
+            document
+              .getElementById("registration-form")
+              ?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="w-full bg-[#e31e26] hover:bg-[#c41920] text-white font-bold py-3 rounded-lg transition-colors cursor-pointer text-sm"
+        >
+          Bu Webinara Kayıt Ol
+        </button>
+      )}
     </div>
   );
 }
 
 export default function TopicsAndAudience() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(nextUpcomingIndex);
   const active = webinarSeries[activeIndex];
 
   return (
@@ -253,9 +198,14 @@ export default function TopicsAndAudience() {
                         <h3 className={`font-semibold text-sm leading-tight ${isActive ? "text-[#06539f]" : "text-gray-900"}`}>
                           {webinar.title}
                         </h3>
-                        <div className="flex items-center gap-2 mt-1.5">
+                        <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                           <Calendar className="w-3.5 h-3.5 text-[#e31e26]" />
                           <span className="text-xs text-gray-500">{webinar.date}</span>
+                          {webinar.status === "completed" && (
+                            <span className="inline-flex items-center text-[10px] font-semibold uppercase tracking-wider text-gray-500 bg-gray-200 rounded-full px-2 py-0.5">
+                              Tamamlandı
+                            </span>
+                          )}
                         </div>
                       </div>
                       {/* Mobil: ChevronDown (aktifken yukarı bakar). Desktop: ChevronRight (split layout). */}
